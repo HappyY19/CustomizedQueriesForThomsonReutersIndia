@@ -1,0 +1,42 @@
+Query Name
+--------------
+ApexBadCrypto
+ApexCRUDViolation
+ApexInsecureEndpoint
+ApexOpenRedirect
+ApexSOQLInjection
+ApexSuggestUsingNamedCred
+ApexUnitTestMethodShouldHaveIsTestAnnotation 
+ApexXSSFromEscapeFalse
+ApexXSSFromURLParam
+AvoidDebugStatements
+AvoidDeeplyNestedIfStmts
+AvoidGlobalModifier
+AvoidLogicInTrigger
+AvoidNonExistentAnnotations
+ClassNamingConventions
+CognitiveComplexity
+CyclomaticComplexity
+DebugsShouldUseLoggingLevel
+EagerlyLoadedDescribeSObjectResult
+Excessive Parameters
+ExcessiveClassLength
+ExcessivePublicCount
+FieldDeclarationsShouldBeAtStart
+FieldNamingConventions
+FormalParameterNamingConventions
+InaccessibleAuraEnabledGetter
+LocalVariableNamingConventions
+MethodNamingConventions
+MethodWithSameNameAsEnclosingClass
+NcssConstructorCount
+NcssMethodCount
+NcssTypeCount
+OperationWithLimitsInLoop
+OverrideBothEqualsAndHashcode
+PropertyNamingConventions
+SeeAllData Should not be True in Test Class
+TooManyFields
+OneDeclarationPerLine
+StdCyclomaticComplexity
+TestMethodsMustBeInTestClasses
