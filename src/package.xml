@@ -5,7 +5,7 @@
         <members>Apex_CRUD_Violation</members>
         <members>Apex_Suggest_Using_Named_Cred</members>
         <members>Apex_XSS_From_Escape_False</members>
-        <members>OWASP_4_DOR_Controller</members>
+        <members>Avoid_Debug_Statements</members>
         <members>OWASP_6_SDE_Controller</members>
         <members>OWASP_8_CSRF_Controller</members>
         <name>ApexClass</name>
