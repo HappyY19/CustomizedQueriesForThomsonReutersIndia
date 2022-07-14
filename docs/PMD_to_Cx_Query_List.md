@@ -14,12 +14,12 @@ The first column is the queries from PMD, the second column is the Checkmarx que
 | ApexInsecureEndpoint                             | Insecure_Endpoint                       | OutOfBox                        |       
 | ApexOpenRedirect                                 | URL_Redirection_Attack                  | OutOfBox                        |
 | ApexSOQLInjection                                | SOQL_SOSL_Injection                     | OutOfBox                        |
-| ApexSuggestUsingNamedCred                        |                                         | Customized              |
+| ApexSuggestUsingNamedCred                        |                                         | Customized                      |
 | ApexUnitTestMethodShouldHaveIsTestAnnotation     | Test_Methods_With_No_Assert             | OutOfBox                        |
-| ApexXSSFromEscapeFalse                           |                                         | Customized             |
+| ApexXSSFromEscapeFalse                           |                                         | Customized                      |
 | ApexXSSFromURLParam                              | Reflected_XSS                           | OutOfBox                        |
-| AvoidDebugStatements                             |                                         | Customized (TO-DO)              |   
-| AvoidDeeplyNestedIfStmts                         |                                         | Customized (TO-DO)              |  
+| AvoidDebugStatements                             |                                         | Customized                      |   
+| AvoidDeeplyNestedIfStmts                         |                                         | Customized                      |  
 | AvoidGlobalModifier                              |                                         | Customized (TO-DO)              |  
 | AvoidLogicInTrigger                              |                                         | Customized (TO-DO)              | 
 | AvoidNonExistentAnnotations                      |                                         | Customized (TO-DO)              |
