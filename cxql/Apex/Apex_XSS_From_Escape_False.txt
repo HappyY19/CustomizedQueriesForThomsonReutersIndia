@@ -1,0 +1,9 @@
+CxList methods = Find_Methods();
+
+CxList methodAddError = methods.FindByShortName("addError", false);	
+
+CxList booleanParamOfAddError = All.GetParameters(methodAddError, 1).FindByType(typeof(BooleanLiteral));
+
+CxList escapeFalse = booleanParamOfAddError.FilterByDomProperty<BooleanLiteral>(x => x.Value.Equals(false));
+
+result.Add(escapeFalse);
