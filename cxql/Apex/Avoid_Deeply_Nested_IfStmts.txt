@@ -1,0 +1,9 @@
+CxList ifStmts = Find_Ifs();
+
+CxList childrenOfFirstLevelIf = All.FindByFathers(ifStmts);
+
+CxList secondLevelIf = ifStmts.GetByAncs(childrenOfFirstLevelIf);
+
+CxList childrenOfSecondLevelIf = All.FindByFathers(secondLevelIf);
+
+result = ifStmts.GetByAncs(childrenOfSecondLevelIf);
