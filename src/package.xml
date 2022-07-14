@@ -3,7 +3,7 @@
     <types>
         <members>Apex_Bad_Crypto</members>
         <members>Apex_CRUD_Violation</members>
-        <members>OWASP_1_Injection_Controller</members>
+        <members>Apex_Suggest_Using_Named_Cred</members>
         <members>OWASP_3_XSS_Controller</members>
         <members>OWASP_4_DOR_Controller</members>
         <members>OWASP_6_SDE_Controller</members>
