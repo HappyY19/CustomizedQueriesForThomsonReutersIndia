@@ -20,7 +20,7 @@ The first column is the queries from PMD, the second column is the Checkmarx que
 | ApexXSSFromURLParam                              | Reflected_XSS                           | OutOfBox                        |
 | AvoidDebugStatements                             |                                         | Customized                      |   
 | AvoidDeeplyNestedIfStmts                         |                                         | Customized                      |  
-| AvoidGlobalModifier                              |                                         | Customized (TO-DO)              |  
+| AvoidGlobalModifier                              |                                         | Customized                      |  
 | AvoidLogicInTrigger                              |                                         | Customized (TO-DO)              | 
 | AvoidNonExistentAnnotations                      |                                         | Customized (TO-DO)              |
 | ClassNamingConventions                           |                                         | Customized (TO-DO)              |
