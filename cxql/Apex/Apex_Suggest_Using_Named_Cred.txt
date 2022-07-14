@@ -1,0 +1,11 @@
+// https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_callouts_named_credentials.htm
+
+CxList methods = Find_Methods();
+CxList strings = Find_Strings();
+
+CxList endPoint = methods.FindByMemberAccess("httprequest.setendpoint");
+endPoint -= Find_Test_Code();
+CxList stringUrlAll = strings.GetParameters(endPoint, 0);
+CxList httpEndPoint = stringUrlAll.FilterByDomProperty<StringLiteral>(x => !x.Value.Contains(@"callout:"));
+
+result = endPoint.DataInfluencedBy(httpEndPoint);
