@@ -7,8 +7,11 @@
         <members>Apex_XSS_From_Escape_False</members>
         <members>Avoid_Deeply_Nested_IfStmts</members>
         <members>Avoid_Global_Modifier</members>
-        <members>OWASP_8_CSRF_Controller</members>
         <name>ApexClass</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>ApexTrigger</name>
     </types>
     <version>0.1</version>
 </Package>
