@@ -21,7 +21,7 @@ The first column is the queries from PMD, the second column is the Checkmarx que
 | AvoidDebugStatements                             |                                         | Customized                      |   
 | AvoidDeeplyNestedIfStmts                         |                                         | Customized                      |  
 | AvoidGlobalModifier                              |                                         | Customized                      |  
-| AvoidLogicInTrigger                              |                                         | Customized (TO-DO)              | 
+| AvoidLogicInTrigger                              |                                         | Customized                      | 
 | AvoidNonExistentAnnotations                      |                                         | Customized (TO-DO)              |
 | ClassNamingConventions                           |                                         | Customized (TO-DO)              |
 | CognitiveComplexity                              |                                         | Customized (TO-DO)              |
