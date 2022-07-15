@@ -7,6 +7,7 @@
         <members>Apex_XSS_From_Escape_False</members>
         <members>Avoid_Deeply_Nested_IfStmts</members>
         <members>Avoid_Global_Modifier</members>
+        <members>Avoid_Non_Existent_Annotations</members>
         <name>ApexClass</name>
     </types>
     <types>
