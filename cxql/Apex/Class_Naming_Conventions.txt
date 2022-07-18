@@ -1,0 +1,3 @@
+CxList classDecls = Find_ClassDecl();
+CxList classWithPascalCase = classDecls.FindByRegex(@"(\s)+([A-Z][a-z]+)+(\s)+");
+result = classDecls - classWithPascalCase;
