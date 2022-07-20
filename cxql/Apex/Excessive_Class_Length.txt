@@ -1,0 +1,12 @@
+// report method that has more than 1000 lines of code 
+
+CxList methodDecls = Find_MethodDecls();
+
+foreach(CxList method in methodDecls) {
+	int methodLine = method.GetDOMPropertiesOfFirst().Line;
+	CxList methodBody = All.GetByAncs(method);
+	CxList methodBodyMoreThanThousandLines = methodBody.Filter(x => x.Line - methodLine >= 1000);
+	if (0 < methodBodyMoreThanThousandLines.Count) {
+		result.Add(method);
+	}
+}
