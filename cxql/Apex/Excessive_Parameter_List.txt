@@ -1,0 +1,30 @@
+// report method declarations that has more than 4 arguments, and at least 3 of them
+// share the same data type
+CxList methodDecls = Find_MethodDecls();
+CxList paramDecls = Find_ParamDecl();
+CxList typeRefs = Find_TypeRef();
+
+foreach (CxList methodDecl in methodDecls) {
+	CxList arguments = paramDecls.GetParameters(methodDecl);
+	System.Collections.Generic.Dictionary<string,int> defined =
+		new System.Collections.Generic.Dictionary<string,int>();
+	// ignore methods that has less than 4 arguments
+	if (4 > arguments.Count) {
+		continue;
+	}
+	
+	// report only if there are more than 3 arguments share the same type
+	CxList types = typeRefs.FindByFathers(arguments);
+	foreach (CxList type in types) {
+		string typeName = type.GetDOMPropertiesOfFirst().ShortName;
+		if(!defined.ContainsKey(typeName)) {
+			defined.Add(typeName, 1);
+		}
+		defined[typeName] += 1;
+	}
+	foreach( KeyValuePair<string, int> kvp in defined ){
+		if (3 <= kvp.Value) {
+			result.Add(methodDecl);
+		}
+	}
+}
