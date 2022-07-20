@@ -25,7 +25,7 @@ The first column is the queries from PMD, the second column is the Checkmarx que
 | AvoidNonExistentAnnotations                      | Avoid_Non_Existent_Annotations          | Customized                      |
 | ClassNamingConventions                           | Class_Naming_Conventions                | Customized                      |
 | CognitiveComplexity                              | Cognitive_Complexity                    | Customized                      |
-| CyclomaticComplexity                             | Cyclomatic_Complexity                   | Customized (TO-DO)              |
+| CyclomaticComplexity                             | Cyclomatic_Complexity                   | Customized                      |
 | DebugsShouldUseLoggingLevel                      |                                         | Customized (TO-DO)              |
 | EagerlyLoadedDescribeSObjectResult               |                                         | Customized (TO-DO)              |
 | ExcessiveParameterList                           |                                         | Customized (TO-DO)              |
