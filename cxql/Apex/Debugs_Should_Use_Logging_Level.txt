@@ -1,0 +1,11 @@
+CxList methods = Find_Methods();
+
+CxList debug = methods.FindByMemberAccess("system.debug", false);
+
+string[] goodDebugLevels = new string[]{"LoggingLevel.WARN", "LoggingLevel.ERROR", "LoggingLevel.NONE"};
+
+CxList goodDebugLevelsMemberAccesses = All.FindByMemberAccesses(goodDebugLevels, false);
+
+CxList debugOfGood = methods.FindByParameters(goodDebugLevelsMemberAccesses);
+
+result = debug - debugOfGood;
