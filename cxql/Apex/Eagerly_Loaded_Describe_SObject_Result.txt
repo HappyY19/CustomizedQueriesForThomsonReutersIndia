@@ -1,0 +1,32 @@
+CxList methods = Find_Methods();
+
+CxList getDescribeAll = methods.FindByMemberAccess("SObjectType.getDescribe", false);
+
+CxList describeSObjectsAll = methods.FindByMemberAccess("Schema.describeSObjects", false);
+
+CxList optionDefault = All.FindByMemberAccess("SObjectDescribeOptions.DEFAULT", false);
+
+foreach (CxList getDescribe in getDescribeAll) {
+	CxList parameters = All.GetParameters(getDescribe);
+	if (0 == parameters.Count) {
+		result.Add(getDescribe);
+	}
+	
+	CxList defaultParameters = optionDefault * parameters;
+	if (1 == defaultParameters.Count) {
+		result.Add(getDescribe);
+	}
+}
+
+foreach (CxList describeSObjects in describeSObjectsAll) {
+	CxList parameters = All.GetParameters(describeSObjects);
+	if (0 == parameters.Count) {
+		result.Add(describeSObjects);
+	}
+	
+	CxList defaultParameters = optionDefault * parameters;
+	if (1 == defaultParameters.Count) {
+		result.Add(describeSObjects);
+	}
+}
+
