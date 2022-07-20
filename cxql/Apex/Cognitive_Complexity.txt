@@ -1,3 +1,13 @@
+/*
+Methods that are highly complex are difficult to read and more costly to maintain.
+ If you include too much decisional logic within a single method, you make its behavior
+ hard to understand and more difficult to modify.
+Cognitive complexity is a measure of how difficult it is for humans to read and understand a method. 
+Code that contains a break in the control flow is more complex, whereas the use of language shorthands 
+doesn’ t increase the level of complexity. Nested control flows can make a method more difficult 
+to understand, with each additional nesting of the control flow leading to an increase in cognitive complexity.
+*/
+
 // calculate cognitive complexity for the method body
 // if the cognitive complexity is bigger than or equals to 15
 // report the method
@@ -74,7 +84,7 @@ foreach(CxList methodDecl in methodDecls) {
 		}
 	}
 		
-	// cxLog.WriteDebugMessage("cognitiveComplexity: " + cognitiveComplexity);
+	//cxLog.WriteDebugMessage("cognitiveComplexity: " + cognitiveComplexity);
 	
 	if (15 <= cognitiveComplexity) {
 		result.Add(methodDecl);
