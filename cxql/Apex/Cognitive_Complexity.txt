@@ -1,0 +1,82 @@
+// calculate cognitive complexity for the method body
+// if the cognitive complexity is bigger than or equals to 15
+// report the method
+// https://www.sonarsource.com/docs/CognitiveComplexity.pdf
+CxList forEachStmts = Find_ForEachStmt();
+CxList switchStmts = Find_SwitchStmt();
+CxList catchStmt = Find_Catch();
+CxList loopStmts = Find_Loops();
+CxList ternaryExprs = Find_TernaryExpr();
+CxList ifStmts = Find_Ifs();
+CxList breakStmts = Find_BreakStmt();
+CxList continueStmts = Find_ContinueStmt();
+CxList lambdaExprs = Find_LambdaExpr();
+
+CxList methodDecls = Find_MethodDecls();
+foreach(CxList methodDecl in methodDecls) {
+	int cognitiveComplexity = 0;
+	
+	// calculate the cognitive complexity
+	CxList fors = forEachStmts.GetByAncs(methodDecl);
+	CxList switchs = switchStmts.GetByAncs(methodDecl);
+	CxList catches = catchStmt.GetByAncs(methodDecl);
+	CxList loops = loopStmts.GetByAncs(methodDecl);
+	CxList ternarys = ternaryExprs.GetByAncs(methodDecl);
+	CxList ifs = ifStmts.GetByAncs(methodDecl);
+	CxList breaks = breakStmts.GetByAncs(methodDecl);
+	CxList continues = continueStmts.GetByAncs(methodDecl);
+	CxList lambdas = lambdaExprs.GetByAncs(methodDecl);
+	
+	cognitiveComplexity += fors.Count;
+	cognitiveComplexity += switchs.Count;
+	cognitiveComplexity += catches.Count;
+	cognitiveComplexity += loops.Count;
+	cognitiveComplexity += ternarys.Count;
+	cognitiveComplexity += ifs.Count;
+	cognitiveComplexity += breakStmts.Count;
+	cognitiveComplexity += continues.Count;
+	
+	// nesting
+	foreach(CxList forSt in fors) {
+		CxList ifInFor = ifs.GetByAncs(forSt);
+		if (ifInFor.Count > 0) {
+			cognitiveComplexity += 1;
+		}
+	}
+	foreach(CxList catchSt in catches) {
+		CxList ifInCatch = ifs.GetByAncs(catchSt);
+		if (ifInCatch.Count > 0) {
+			cognitiveComplexity += 1;
+		}
+	}
+	foreach(CxList lambdaSt in lambdas) {
+		CxList ifInLambda = ifs.GetByAncs(lambdaSt);
+		if (ifInLambda.Count > 0) {
+			cognitiveComplexity += 1;
+		}
+	}
+	foreach(CxList ifSt in ifs) {
+		CxList forsInIf = fors.GetByAncs(ifSt);
+		if (forsInIf.Count > 0) {
+			cognitiveComplexity += 1;
+		}
+	}
+	foreach(CxList ifSt in ifs) {
+		CxList whileInIf = loops.GetByAncs(ifSt);
+		if (whileInIf.Count > 0) {
+			cognitiveComplexity += 1;
+		}
+	}
+	foreach(CxList forSt in fors) {
+		CxList whileInFor = loops.GetByAncs(forSt);
+		if (whileInFor.Count > 0) {
+			cognitiveComplexity += 1;
+		}
+	}
+		
+	// cxLog.WriteDebugMessage("cognitiveComplexity: " + cognitiveComplexity);
+	
+	if (15 <= cognitiveComplexity) {
+		result.Add(methodDecl);
+	}
+}
