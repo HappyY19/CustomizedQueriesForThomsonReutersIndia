@@ -1,0 +1,50 @@
+/*
+The complexity of methods directly affects maintenance costs and readability. 
+Concentrating too much decisional logic in a single method makes its behaviour hard to read and change.
+Cyclomatic complexity assesses the complexity of a method by counting the number of decision points in 
+a method, plus one for the method entry. Decision points are places where the control flow jumps 
+to another place in the program. As such, they include all control flow statements, 
+such as ‘if’, ‘while’, ‘for’, and ‘case’.
+Generally, numbers ranging from 1-4 denote low complexity, 5-7 denote moderate complexity, 
+8-10 denote high complexity, and 11+ is very high complexity. By default, this rule reports methods 
+with a complexity >= 10.
+
+https://www.mccabe.com/pdf/mccabe-nist235r.pdf
+*/
+
+CxList forEachStmts = Find_ForEachStmt();
+CxList caseStmts = Find_Cases();
+CxList loopStmts = Find_Loops();
+CxList ternaryExprs = Find_TernaryExpr();
+CxList ifStmts = Find_Ifs();
+CxList binaryExpr = Find_BinaryExpr();
+List<string> binaryOperators = new List<string>(){
+		"||", "&&",								// Logical Operators
+};
+CxList operatorsBinary = binaryExpr.FindByShortNames(binaryOperators);
+
+CxList methodDecls = Find_MethodDecls();
+foreach(CxList methodDecl in methodDecls) {
+	int cyclomaticComplexity = 1;
+	
+	// calculate the cognitive complexity
+	CxList fors = forEachStmts.GetByAncs(methodDecl);
+	CxList cases = caseStmts.GetByAncs(methodDecl);
+	CxList loops = loopStmts.GetByAncs(methodDecl);
+	CxList ternarys = ternaryExprs.GetByAncs(methodDecl);
+	CxList ifs = ifStmts.GetByAncs(methodDecl);
+	CxList binarys = operatorsBinary.GetByAncs(methodDecl);
+	
+	cyclomaticComplexity += fors.Count;
+	cyclomaticComplexity += cases.Count;
+	cyclomaticComplexity += loops.Count;
+	cyclomaticComplexity += ternarys.Count;
+	cyclomaticComplexity += ifs.Count;
+	cyclomaticComplexity += binarys.Count;
+			
+	cxLog.WriteDebugMessage("cyclomaticComplexity: " + cyclomaticComplexity);
+	
+	if (10 <= cyclomaticComplexity) {
+		result.Add(methodDecl);
+	}
+}
