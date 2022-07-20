@@ -14,18 +14,18 @@ The first column is the queries from PMD, the second column is the Checkmarx que
 | ApexInsecureEndpoint                             | Insecure_Endpoint                       | OutOfBox                        |       
 | ApexOpenRedirect                                 | URL_Redirection_Attack                  | OutOfBox                        |
 | ApexSOQLInjection                                | SOQL_SOSL_Injection                     | OutOfBox                        |
-| ApexSuggestUsingNamedCred                        |                                         | Customized                      |
+| ApexSuggestUsingNamedCred                        | Apex_Suggest_Using_Named_Cred           | Customized                      |
 | ApexUnitTestMethodShouldHaveIsTestAnnotation     | Test_Methods_With_No_Assert             | OutOfBox                        |
-| ApexXSSFromEscapeFalse                           |                                         | Customized                      |
+| ApexXSSFromEscapeFalse                           | Apex_XSS_From_Escape_False              | Customized                      |
 | ApexXSSFromURLParam                              | Reflected_XSS                           | OutOfBox                        |
-| AvoidDebugStatements                             |                                         | Customized                      |   
-| AvoidDeeplyNestedIfStmts                         |                                         | Customized                      |  
-| AvoidGlobalModifier                              |                                         | Customized                      |  
-| AvoidLogicInTrigger                              |                                         | Customized                      | 
-| AvoidNonExistentAnnotations                      |                                         | Customized                      |
-| ClassNamingConventions                           |                                         | Customized                      |
-| CognitiveComplexity                              |                                         | Customized (TO-DO)              |
-| CyclomaticComplexity                             |                                         | Customized (TO-DO)              |
+| AvoidDebugStatements                             | Avoid_Debug_Statements                  | Customized                      |   
+| AvoidDeeplyNestedIfStmts                         | Avoid_Deeply_Nested_IfStmts             | Customized                      |  
+| AvoidGlobalModifier                              | Avoid_Global_Modifier                   | Customized                      |  
+| AvoidLogicInTrigger                              | Avoid_Logic_In_Trigger                  | Customized                      | 
+| AvoidNonExistentAnnotations                      | Avoid_Non_Existent_Annotations          | Customized                      |
+| ClassNamingConventions                           | Class_Naming_Conventions                | Customized                      |
+| CognitiveComplexity                              | Cognitive_Complexity                    | Customized                      |
+| CyclomaticComplexity                             | Cyclomatic_Complexity                   | Customized (TO-DO)              |
 | DebugsShouldUseLoggingLevel                      |                                         | Customized (TO-DO)              |
 | EagerlyLoadedDescribeSObjectResult               |                                         | Customized (TO-DO)              |
 | ExcessiveParameterList                           |                                         | Customized (TO-DO)              |
