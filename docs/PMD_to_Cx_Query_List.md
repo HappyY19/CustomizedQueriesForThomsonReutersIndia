@@ -30,8 +30,8 @@ The first column is the queries from PMD, the second column is the Checkmarx que
 | EagerlyLoadedDescribeSObjectResult               | Eagerly_Loaded_Describe_SObject_Result            | Customized                      |
 | ExcessiveParameterList                           | Excessive_Parameter_List                          | Customized                      |
 | ExcessiveClassLength                             | Excessive_Class_Length                            | Customized                      |
-| ExcessivePublicCount                             | Excessive_Public_Count                            | Customized (TO-DO)              |
-| FieldDeclarationsShouldBeAtStart                 | Field_Declarations_Should_Be_At_Start             | Customized (TO-DO)              |
+| ExcessivePublicCount                             | Excessive_Public_Count                            | Customized                      |
+| FieldDeclarationsShouldBeAtStart                 | Field_Declarations_Should_Be_At_Start             | Customized                      |
 | FieldNamingConventions                           | Field_Naming_Conventions                          | Customized (TO-DO)              |
 | FormalParameterNamingConventions                 | Formal_Parameter_Naming_Conventions               | Customized (TO-DO)              |
 | InaccessibleAuraEnabledGetter                    | Inaccessible_Aura_Enabled_Getter                  | Customized (TO-DO)              |
