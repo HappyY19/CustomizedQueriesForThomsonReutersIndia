@@ -1,0 +1,26 @@
+// This query reports class declarations that have field decalarations after method declarations
+CxList classDecls = Find_ClassDecl();
+foreach (CxList classDecl in classDecls) {
+	CxList memberCollection = All.FindByFathers(classDecl);
+	CxList membersOfClass = All.FindByFathers(memberCollection);
+	
+	// maximum line number of FieldDecl should be smaller than maximum line number of MethodDecl
+	int maximumLineNumberOfFieldDecl = 0;
+	int maximumLineNumberOfMethodDecl = 1;
+	foreach (CxList member in membersOfClass) {
+		int lineNumber = member.GetDOMPropertiesOfFirst().Line;
+		CxList field = member.FindByType(typeof(FieldDecl));;
+		if (0 != field.Count && maximumLineNumberOfFieldDecl < lineNumber) {
+			maximumLineNumberOfFieldDecl = lineNumber;
+		} else if (maximumLineNumberOfMethodDecl < lineNumber) {
+			maximumLineNumberOfMethodDecl = lineNumber;
+		}
+	}
+	/*
+	cxLog.WriteDebugMessage("className: " + classDecl.GetDOMPropertiesOfFirst().ShortName +
+		" maximumLineNumberOfFieldDecl: " + maximumLineNumberOfFieldDecl + " maximumLineNumberOfMethodDecl: " + maximumLineNumberOfMethodDecl);
+	*/
+	if (maximumLineNumberOfFieldDecl > maximumLineNumberOfMethodDecl) {
+		result.Add(classDecl);
+	}
+}
