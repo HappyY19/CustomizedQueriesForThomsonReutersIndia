@@ -1,0 +1,4 @@
+// This query reports any method declaration that is not camel case
+CxList methodDecls = Find_MethodDecls();
+CxList methodDeclsOfCamelCase = methodDecls.FindByRegex(@"\s*[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?\s*[(]");
+result = methodDecls - methodDeclsOfCamelCase;
