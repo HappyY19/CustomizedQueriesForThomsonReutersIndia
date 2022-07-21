@@ -34,7 +34,7 @@ The first column is the queries from PMD, the second column is the Checkmarx que
 | FieldDeclarationsShouldBeAtStart                 | Field_Declarations_Should_Be_At_Start             | Customized                      |
 | FieldNamingConventions                           | Field_Naming_Conventions                          | Customized                      |
 | FormalParameterNamingConventions                 | Formal_Parameter_Naming_Conventions               | Customized                      |
-| InaccessibleAuraEnabledGetter                    | Inaccessible_Aura_Enabled_Getter                  | Customized (TO-DO)              |
+| InaccessibleAuraEnabledGetter                    | Inaccessible_Aura_Enabled_Getter                  | Customized                      |
 | LocalVariableNamingConventions                   | Local_Variable_Naming_Conventions                 | Customized (TO-DO)              |
 | MethodNamingConventions                          | Method_Naming_Conventions                         | Customized (TO-DO)              |
 | MethodWithSameNameAsEnclosingClass               | Method_With_Same_Name_As_Enclosing_Class          | Customized (TO-DO)              |
