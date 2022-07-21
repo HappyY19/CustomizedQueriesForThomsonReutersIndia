@@ -36,7 +36,7 @@ The first column is the queries from PMD, the second column is the Checkmarx que
 | FormalParameterNamingConventions                 | Formal_Parameter_Naming_Conventions               | Customized                      |
 | InaccessibleAuraEnabledGetter                    | Inaccessible_Aura_Enabled_Getter                  | Customized                      |
 | LocalVariableNamingConventions                   | Local_Variable_Naming_Conventions                 | Customized                      |
-| MethodNamingConventions                          | Method_Naming_Conventions                         | Customized (TO-DO)              |
+| MethodNamingConventions                          | Method_Naming_Conventions                         | Customized                      |
 | MethodWithSameNameAsEnclosingClass               | Method_With_Same_Name_As_Enclosing_Class          | Customized (TO-DO)              |
 | NcssConstructorCount                             | Ncss_Constructor_Count                            | Customized (TO-DO)              |
 | NcssMethodCount                                  | Ncss_Method_Count                                 | Customized (TO-DO)              |
