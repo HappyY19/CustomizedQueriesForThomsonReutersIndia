@@ -1,0 +1,4 @@
+// This query reports any parameter decalaration that is not camel case
+CxList paramDecls = Find_ParamDecl();
+CxList paramDeclsOfCamelCase = paramDecls.FindByRegex(@"\s*[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?[,)]");
+result = paramDecls - paramDeclsOfCamelCase;
