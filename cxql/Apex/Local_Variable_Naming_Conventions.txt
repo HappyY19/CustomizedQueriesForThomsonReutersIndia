@@ -1,0 +1,8 @@
+// This query reports any local variable that is not camel case.
+CxList constructors = Find_ConstructorDecl();
+CxList methodDecls = Find_MethodDecls();
+CxList declarators = Find_Declarators();
+CxList declaratorsInMethodDecl = declarators.GetByAncs(methodDecls);
+declaratorsInMethodDecl.Add(declarators.GetByAncs(constructors));
+CxList declaratorsOfCamelCase = declaratorsInMethodDecl.FindByRegex(@"\s*[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?\s*[=;:]");
+result = declaratorsInMethodDecl - declaratorsOfCamelCase;
