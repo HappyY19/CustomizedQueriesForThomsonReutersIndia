@@ -32,7 +32,7 @@ The first column is the queries from PMD, the second column is the Checkmarx que
 | ExcessiveClassLength                             | Excessive_Class_Length                            | Customized                      |
 | ExcessivePublicCount                             | Excessive_Public_Count                            | Customized                      |
 | FieldDeclarationsShouldBeAtStart                 | Field_Declarations_Should_Be_At_Start             | Customized                      |
-| FieldNamingConventions                           | Field_Naming_Conventions                          | Customized (TO-DO)              |
+| FieldNamingConventions                           | Field_Naming_Conventions                          | Customized                      |
 | FormalParameterNamingConventions                 | Formal_Parameter_Naming_Conventions               | Customized (TO-DO)              |
 | InaccessibleAuraEnabledGetter                    | Inaccessible_Aura_Enabled_Getter                  | Customized (TO-DO)              |
 | LocalVariableNamingConventions                   | Local_Variable_Naming_Conventions                 | Customized (TO-DO)              |
