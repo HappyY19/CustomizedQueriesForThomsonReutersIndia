@@ -1,0 +1,12 @@
+// This query report any method declaration that its name is the same as the class name
+CxList classDecls = Find_ClassDecl();
+CxList methodDecls = Find_MethodDecls();
+foreach (CxList classDecl in classDecls) {
+	CxList methodDeclInClass = methodDecls.GetByAncs(classDecl); 
+	string className = classDecl.GetDOMPropertiesOfFirst().ShortName;
+	
+	CxList methods = methodDeclInClass.FilterByDomProperty<MethodDecl>(x => x.ShortName.Equals(className));
+	if (0 < methods.Count) {
+		result.Add(methods);
+	}
+}
