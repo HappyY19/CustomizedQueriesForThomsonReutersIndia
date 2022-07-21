@@ -1,0 +1,8 @@
+// This query reports field decalarations that is not camel case, 
+// except the constants (static final), static field, final field.
+CxList fieldDecls = Find_FieldDecls();
+CxList staticFields = fieldDecls.FindByFieldAttributes(Modifiers.Static);
+CxList finalFields = fieldDecls.FindByRegex(@"\Wfinal\W");
+CxList fields = fieldDecls - staticFields - finalFields;
+CxList camelCaseFields = fields.FindByRegex(@"\s*[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?\s*;");
+result = fields - camelCaseFields;
