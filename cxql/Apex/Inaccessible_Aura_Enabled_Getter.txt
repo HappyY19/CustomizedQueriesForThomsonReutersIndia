@@ -1,0 +1,3 @@
+// This query reports access modifiers that are private or protected
+CxList accessorDecls = All.FindByType(typeof(AccessorDecl));
+result = accessorDecls.FindByFieldAttributes(Modifiers.Private | Modifiers.Protected);
