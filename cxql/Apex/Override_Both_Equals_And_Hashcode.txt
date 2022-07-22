@@ -1,0 +1,12 @@
+// this query reports class that only have either "equals" or "hashCode" method definition, but not both.
+CxList methodDecls = Find_MethodDecls();
+List<string> methodsList = new List<string> {"equals", "hashCode"};
+CxList methods = methodDecls.FindByShortNames(methodsList);
+foreach(CxList method in methods) {
+	CxList classDecl = method.GetAncOfType(typeof(ClassDecl));
+	CxList methodDeclsInClass = methodDecls.GetByAncs(classDecl);
+	CxList equalsAndHashCodeMethodDecls = methodDeclsInClass.Filter(x => methodsList.Contains(x.ShortName));
+	if (1 == equalsAndHashCodeMethodDecls.Count) {
+		result.Add(classDecl);
+	}
+}
