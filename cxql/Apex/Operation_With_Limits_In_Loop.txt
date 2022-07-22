@@ -1,0 +1,15 @@
+CxList loops = Find_Loops();
+CxList forEachStmts = Find_ForEachStmt();
+loops.Add(forEachStmts);
+CxList methods = Find_Methods();
+
+string[] memberAcesses = new string[]{"Database.insert", "Messaging.sendEmail", 
+	"Approval.process", "Approval.lock", "Approval.unlock",
+	"System.enqueueJob", "System.schedule", "System.scheduleBatch"};
+CxList operations = All.FindByMemberAccesses(memberAcesses, false);
+
+CxList apexDMLStatements = methods.FindByShortNames(new List<string> {
+		"select", "insert", "update", "upsert", "delete", "undelete", "merge"});
+
+result = operations.GetByAncs(loops);
+result.Add(apexDMLStatements.GetByAncs(loops));
