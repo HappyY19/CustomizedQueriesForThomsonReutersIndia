@@ -1,0 +1,11 @@
+// report the class that has more than 15 fields
+
+CxList fieldDecls = Find_FieldDecls();
+CxList classDecls = Find_ClassDecl();
+
+foreach(CxList classDecl in classDecls) {
+	CxList fieldsInClass = fieldDecls.GetByAncs(classDecl);
+	if (15 < fieldsInClass.Count) {
+		result.Add(classDecl);
+	}
+}
