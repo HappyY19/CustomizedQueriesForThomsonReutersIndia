@@ -1,0 +1,18 @@
+// report constructor that has more than 20 lines of code
+CxList constructors = Find_ConstructorDecl();
+
+foreach(CxList constructor in constructors) {
+	CxList descendents = All.GetByAncs(constructor);
+	HashSet<int> lineNumbers = new HashSet<int>();
+	foreach(CxList descendent in descendents) {
+		int lineNumber = descendent.GetDOMPropertiesOfFirst().Line;
+		lineNumbers.Add(lineNumber);
+	}
+	/*
+	cxLog.WriteDebugMessage("constructor: " + constructor.GetDOMPropertiesOfFirst().ShortName
+		+ " lines of code: " + lineNumbers.Count);
+	*/
+	if (20 < lineNumbers.Count) {
+		result.Add(constructor);
+	}
+}
