@@ -1,0 +1,19 @@
+// report methods that has more than 40 lines of code
+CxList methodDecls = Find_MethodDecls();
+
+
+foreach(CxList methodDecl in methodDecls) {
+	CxList descendents = All.GetByAncs(methodDecl);
+	HashSet<int> lineNumbers = new HashSet<int>();
+	foreach(CxList descendent in descendents) {
+		int lineNumber = descendent.GetDOMPropertiesOfFirst().Line;
+		lineNumbers.Add(lineNumber);
+	}
+	
+	cxLog.WriteDebugMessage("constructor: " + methodDecl.GetDOMPropertiesOfFirst().ShortName
+		+ " lines of code: " + lineNumbers.Count);
+	
+	if (40 < lineNumbers.Count) {
+		result.Add(methodDecl);
+	}
+}
