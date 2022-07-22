@@ -1,0 +1,18 @@
+// This query report class declaration with more than 500 lines of code
+CxList classDecls = Find_ClassDecl();
+
+foreach(CxList classDecl in classDecls) {
+	CxList descendents = All.GetByAncs(classDecl);
+	HashSet<int> lineNumbers = new HashSet<int>();
+	foreach(CxList descendent in descendents) {
+		int lineNumber = descendent.GetDOMPropertiesOfFirst().Line;
+		lineNumbers.Add(lineNumber);
+	}
+	/*
+	cxLog.WriteDebugMessage("class: " + classDecl.GetDOMPropertiesOfFirst().ShortName
+		+ " lines of code: " + lineNumbers.Count);
+	*/
+	if (40 < lineNumbers.Count) {
+		result.Add(classDecl);
+	}
+}
