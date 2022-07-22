@@ -41,10 +41,10 @@ The first column is the queries from PMD, the second column is the Checkmarx que
 | NcssConstructorCount                             | Ncss_Constructor_Count                            | Customized                      |
 | NcssMethodCount                                  | Ncss_Method_Count                                 | Customized                      |
 | NcssTypeCount                                    | Ncss_Type_Count                                   | Customized                      |
-| OperationWithLimitsInLoop                        | Operation_With_Limits_In_Loop                     | Customized                      |
+| OperationWithLimitsInLoop                        | DML_Statements_Inside_Loops                       | OutOfBox                        |
 | OverrideBothEqualsAndHashcode                    | Override_Both_Equals_And_Hashcode                 | Customized                      |
 | PropertyNamingConventions                        | Property_Naming_Conventions                       | Customized                      |
-| ApexUnitTestShouldNotUseSeeAllDataTrue           | Apex_Unit_Test_Should_Not_Use_See_All_Data_True   | Customized (TO-DO)              |
+| ApexUnitTestShouldNotUseSeeAllDataTrue           | Find_Exposed_Test_Data                            | OutOfBox                        |
 | TooManyFields                                    | Too_Many_Fields                                   | Customized (TO-DO)              |
 | OneDeclarationPerLine                            | One_Declaration_Per_Line                          | Customized (TO-DO)              |
 | StdCyclomaticComplexity                          | Std_Cyclomatic_Complexity                         | Customized (TO-DO)              |
