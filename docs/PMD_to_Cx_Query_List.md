@@ -47,5 +47,5 @@ The first column is the queries from PMD, the second column is the Checkmarx que
 | ApexUnitTestShouldNotUseSeeAllDataTrue           | Find_Exposed_Test_Data                            | OutOfBox                        |
 | TooManyFields                                    | Too_Many_Fields                                   | Customized                      |
 | OneDeclarationPerLine                            | One_Declaration_Per_Line                          | Customized                      |
-| StdCyclomaticComplexity                          | Std_Cyclomatic_Complexity                         | Customized (TO-DO)              |
-| TestMethodsMustBeInTestClasses                   | Test_Methods_Must_Be_In_Test_Classes              | Customized (TO-DO)              |
+| StdCyclomaticComplexity                          | Cyclomatic_Complexity                             | Customized                      |
+| TestMethodsMustBeInTestClasses                   | Test_Methods_Must_Be_In_Test_Classes              | Customized                      |
