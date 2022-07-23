@@ -1,0 +1,14 @@
+CxList methodDecls = Find_MethodDecls();
+CxList declarators = Find_Declarators();
+foreach(CxList methodDecl in methodDecls) {
+	CxList declaratorsInMethod = declarators.GetByAncs(methodDecl);
+	List<int> lineNumbers = new List<int>();
+	foreach(CxList declarator in declaratorsInMethod) {
+		int line = declarator.GetDOMPropertiesOfFirst().Line;
+		if (lineNumbers.Contains(line) ) {
+			result.Add(declarator);
+		} else {
+			lineNumbers.Add(line);
+		}
+	}
+}
