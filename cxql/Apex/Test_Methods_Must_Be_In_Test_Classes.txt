@@ -1,0 +1,12 @@
+// This query report class declarations that has test method, but not annotated by istest.
+CxList methodDecls = Find_MethodDecls();
+CxList classDecls = Find_ClassDecl();
+CxList testCode = Find_Test_Code();
+
+CxList methodDeclInTestCode = testCode.FindByType(typeof(MethodDecl));
+CxList classDeclWithTestMethod = methodDeclInTestCode.GetAncOfType(typeof(ClassDecl));
+
+CxList customAttributes = All.FindByCustomAttribute("istest");
+CxList isTest = customAttributes.GetFathers();
+CxList classAnnotatedWithIsTest = isTest.FindByTypes(typeof(ClassDecl));
+result = classDeclWithTestMethod - classAnnotatedWithIsTest;
