@@ -1,0 +1,432 @@
+﻿<Queries><Query><QueryId>100015</QueryId><Name>Apex_Suggest_Using_Named_Cred</Name><Cwe>0</Cwe><PackageId>100008</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Serious_Security_Risk</GroupName><Source>CxList methods = Find_Methods();
+CxList strings = Find_Strings();
+
+CxList endPoint = methods.FindByMemberAccess("httprequest.setendpoint");
+endPoint -= Find_Test_Code();
+CxList stringUrlAll = strings.GetParameters(endPoint, 0);
+CxList httpEndPoint = stringUrlAll.FilterByDomProperty&lt;StringLiteral&gt;(x =&gt; !x.Value.Contains(@"callout:"));
+
+result = endPoint.DataInfluencedBy(httpEndPoint);</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>2</Version></Query><Query><QueryId>100016</QueryId><Name>Apex_XSS_From_Escape_False</Name><Cwe>0</Cwe><PackageId>100008</PackageId><IsExecutable>true</IsExecutable><Severity>2</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Serious_Security_Risk</GroupName><Source>CxList methods = Find_Methods();
+
+CxList methodAddError = methods.FindByShortName("addError", false);	
+
+CxList booleanParamOfAddError = All.GetParameters(methodAddError, 1).FindByType(typeof(BooleanLiteral));
+
+CxList escapeFalse = booleanParamOfAddError.FilterByDomProperty&lt;BooleanLiteral&gt;(x =&gt; x.Value.Equals(false));
+
+result.Add(escapeFalse);</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>1</Version></Query><Query><QueryId>100017</QueryId><Name>Avoid_Debug_Statements</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>CxList methods = Find_Methods();
+
+result = methods.FindByMemberAccess("System.debug", false);</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>1</Version></Query><Query><QueryId>100018</QueryId><Name>Avoid_Deeply_Nested_IfStmts</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>CxList ifStmts = Find_Ifs();
+
+CxList childrenOfFirstLevelIf = All.FindByFathers(ifStmts);
+
+CxList secondLevelIf = ifStmts.GetByAncs(childrenOfFirstLevelIf);
+
+CxList childrenOfSecondLevelIf = All.FindByFathers(secondLevelIf);
+
+result = ifStmts.GetByAncs(childrenOfSecondLevelIf);</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>1</Version></Query><Query><QueryId>100019</QueryId><Name>Avoid_Global_Modifier</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>CxList glob = All.FindByFieldAttributes(Modifiers.Global);
+result = glob;</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>1</Version></Query><Query><QueryId>100020</QueryId><Name>Avoid_Logic_In_Trigger</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>// https://salesforce.stackexchange.com/questions/354975/avoid-logic-in-triggers-pmd-with-safe-navigator
+// https://github.com/sakomg/my-twistrail/blob/master/force-app/main/default/triggers/OpportunityTrigger.trigger
+CxList trigerCode = Find_Triggers_Code();
+
+CxList conditions = Get_Conditions();
+
+CxList conditionInTriggerCode = trigerCode * conditions;
+
+result = conditionInTriggerCode.FindByMemberAccess("trigger.is*", false);
+</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>1</Version></Query><Query><QueryId>100021</QueryId><Name>Avoid_Non_Existent_Annotations</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>result = All.FindByCustomAttribute("nonexistentannotation");</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>1</Version></Query><Query><QueryId>100022</QueryId><Name>Class_Naming_Conventions</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>CxList classDecls = Find_ClassDecl();
+CxList classWithPascalCase = classDecls.FindByRegex(@"(\s)+([A-Z][a-z]+)+(\s)+");
+result = classDecls - classWithPascalCase;
+</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>1</Version></Query><Query><QueryId>100023</QueryId><Name>Cognitive_Complexity</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>/*
+Methods that are highly complex are difficult to read and more costly to maintain.
+ If you include too much decisional logic within a single method, you make its behavior
+ hard to understand and more difficult to modify.
+Cognitive complexity is a measure of how difficult it is for humans to read and understand a method. 
+Code that contains a break in the control flow is more complex, whereas the use of language shorthands 
+doesn’ t increase the level of complexity. Nested control flows can make a method more difficult 
+to understand, with each additional nesting of the control flow leading to an increase in cognitive complexity.
+*/
+
+// calculate cognitive complexity for the method body
+// if the cognitive complexity is bigger than or equals to 15
+// report the method
+// https://www.sonarsource.com/docs/CognitiveComplexity.pdf
+CxList forEachStmts = Find_ForEachStmt();
+CxList switchStmts = Find_SwitchStmt();
+CxList catchStmt = Find_Catch();
+CxList loopStmts = Find_Loops();
+CxList ternaryExprs = Find_TernaryExpr();
+CxList ifStmts = Find_Ifs();
+CxList breakStmts = Find_BreakStmt();
+CxList continueStmts = Find_ContinueStmt();
+CxList lambdaExprs = Find_LambdaExpr();
+
+CxList methodDecls = Find_MethodDecls();
+foreach(CxList methodDecl in methodDecls) {
+	int cognitiveComplexity = 0;
+	
+	// calculate the cognitive complexity
+	CxList fors = forEachStmts.GetByAncs(methodDecl);
+	CxList switchs = switchStmts.GetByAncs(methodDecl);
+	CxList catches = catchStmt.GetByAncs(methodDecl);
+	CxList loops = loopStmts.GetByAncs(methodDecl);
+	CxList ternarys = ternaryExprs.GetByAncs(methodDecl);
+	CxList ifs = ifStmts.GetByAncs(methodDecl);
+	CxList breaks = breakStmts.GetByAncs(methodDecl);
+	CxList continues = continueStmts.GetByAncs(methodDecl);
+	CxList lambdas = lambdaExprs.GetByAncs(methodDecl);
+	
+	cognitiveComplexity += fors.Count;
+	cognitiveComplexity += switchs.Count;
+	cognitiveComplexity += catches.Count;
+	cognitiveComplexity += loops.Count;
+	cognitiveComplexity += ternarys.Count;
+	cognitiveComplexity += ifs.Count;
+	cognitiveComplexity += breakStmts.Count;
+	cognitiveComplexity += continues.Count;
+	
+	// nesting
+	foreach(CxList forSt in fors) {
+		CxList ifInFor = ifs.GetByAncs(forSt);
+		if (ifInFor.Count &gt; 0) {
+			cognitiveComplexity += 1;
+		}
+	}
+	foreach(CxList catchSt in catches) {
+		CxList ifInCatch = ifs.GetByAncs(catchSt);
+		if (ifInCatch.Count &gt; 0) {
+			cognitiveComplexity += 1;
+		}
+	}
+	foreach(CxList lambdaSt in lambdas) {
+		CxList ifInLambda = ifs.GetByAncs(lambdaSt);
+		if (ifInLambda.Count &gt; 0) {
+			cognitiveComplexity += 1;
+		}
+	}
+	foreach(CxList ifSt in ifs) {
+		CxList forsInIf = fors.GetByAncs(ifSt);
+		if (forsInIf.Count &gt; 0) {
+			cognitiveComplexity += 1;
+		}
+	}
+	foreach(CxList ifSt in ifs) {
+		CxList whileInIf = loops.GetByAncs(ifSt);
+		if (whileInIf.Count &gt; 0) {
+			cognitiveComplexity += 1;
+		}
+	}
+	foreach(CxList forSt in fors) {
+		CxList whileInFor = loops.GetByAncs(forSt);
+		if (whileInFor.Count &gt; 0) {
+			cognitiveComplexity += 1;
+		}
+	}
+		
+	//cxLog.WriteDebugMessage("cognitiveComplexity: " + cognitiveComplexity);
+	
+	if (15 &lt;= cognitiveComplexity) {
+		result.Add(methodDecl);
+	}
+}</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>6</Version></Query><Query><QueryId>100024</QueryId><Name>Cyclomatic_Complexity</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>/*
+The complexity of methods directly affects maintenance costs and readability. 
+Concentrating too much decisional logic in a single method makes its behaviour hard to read and change.
+Cyclomatic complexity assesses the complexity of a method by counting the number of decision points in 
+a method, plus one for the method entry. Decision points are places where the control flow jumps 
+to another place in the program. As such, they include all control flow statements, 
+such as ‘if’, ‘while’, ‘for’, and ‘case’.
+Generally, numbers ranging from 1-4 denote low complexity, 5-7 denote moderate complexity, 
+8-10 denote high complexity, and 11+ is very high complexity. By default, this rule reports methods 
+with a complexity &gt;= 10.
+
+https://www.mccabe.com/pdf/mccabe-nist235r.pdf
+*/
+
+CxList forEachStmts = Find_ForEachStmt();
+CxList caseStmts = Find_Cases();
+CxList loopStmts = Find_Loops();
+CxList ternaryExprs = Find_TernaryExpr();
+CxList ifStmts = Find_Ifs();
+CxList binaryExpr = Find_BinaryExpr();
+List&lt;string&gt; binaryOperators = new List&lt;string&gt;(){
+		"||", "&amp;&amp;",								// Logical Operators
+};
+CxList operatorsBinary = binaryExpr.FindByShortNames(binaryOperators);
+
+CxList methodDecls = Find_MethodDecls();
+foreach(CxList methodDecl in methodDecls) {
+	int cyclomaticComplexity = 1;
+	
+	// calculate the cognitive complexity
+	CxList fors = forEachStmts.GetByAncs(methodDecl);
+	CxList cases = caseStmts.GetByAncs(methodDecl);
+	CxList loops = loopStmts.GetByAncs(methodDecl);
+	CxList ternarys = ternaryExprs.GetByAncs(methodDecl);
+	CxList ifs = ifStmts.GetByAncs(methodDecl);
+	CxList binarys = operatorsBinary.GetByAncs(methodDecl);
+	
+	cyclomaticComplexity += fors.Count;
+	cyclomaticComplexity += cases.Count;
+	cyclomaticComplexity += loops.Count;
+	cyclomaticComplexity += ternarys.Count;
+	cyclomaticComplexity += ifs.Count;
+	cyclomaticComplexity += binarys.Count;
+			
+	cxLog.WriteDebugMessage("cyclomaticComplexity: " + cyclomaticComplexity);
+	
+	if (10 &lt;= cyclomaticComplexity) {
+		result.Add(methodDecl);
+	}
+}</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>2</Version></Query><Query><QueryId>100025</QueryId><Name>Debugs_Should_Use_Logging_Level</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>CxList methods = Find_Methods();
+
+CxList debug = methods.FindByMemberAccess("system.debug", false);
+
+string[] goodDebugLevels = new string[]{"LoggingLevel.WARN", "LoggingLevel.ERROR", "LoggingLevel.NONE"};
+
+CxList goodDebugLevelsMemberAccesses = All.FindByMemberAccesses(goodDebugLevels, false);
+
+CxList debugOfGood = methods.FindByParameters(goodDebugLevelsMemberAccesses);
+
+result = debug - debugOfGood;</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>1</Version></Query><Query><QueryId>100026</QueryId><Name>Eagerly_Loaded_Describe_SObject_Result</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>CxList methods = Find_Methods();
+
+CxList getDescribeAll = methods.FindByMemberAccess("SObjectType.getDescribe", false);
+
+CxList describeSObjectsAll = methods.FindByMemberAccess("Schema.describeSObjects", false);
+
+CxList optionDefault = All.FindByMemberAccess("SObjectDescribeOptions.DEFAULT", false);
+
+foreach (CxList getDescribe in getDescribeAll) {
+	CxList parameters = All.GetParameters(getDescribe);
+	if (0 == parameters.Count) {
+		result.Add(getDescribe);
+	}
+	
+	CxList defaultParameters = optionDefault * parameters;
+	if (1 == defaultParameters.Count) {
+		result.Add(getDescribe);
+	}
+}
+
+foreach (CxList describeSObjects in describeSObjectsAll) {
+	CxList parameters = All.GetParameters(describeSObjects);
+	if (0 == parameters.Count) {
+		result.Add(describeSObjects);
+	}
+	
+	CxList defaultParameters = optionDefault * parameters;
+	if (1 == defaultParameters.Count) {
+		result.Add(describeSObjects);
+	}
+}
+
+</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>1</Version></Query><Query><QueryId>100027</QueryId><Name>Excessive_Parameter_List</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>// report method declarations that has more than 4 arguments, and at least 3 of them
+// share the same data type
+CxList methodDecls = Find_MethodDecls();
+CxList paramDecls = Find_ParamDecl();
+CxList typeRefs = Find_TypeRef();
+
+foreach (CxList methodDecl in methodDecls) {
+	CxList arguments = paramDecls.GetParameters(methodDecl);
+	System.Collections.Generic.Dictionary&lt;string,int&gt; defined =
+		new System.Collections.Generic.Dictionary&lt;string,int&gt;();
+	// ignore methods that has less than 4 arguments
+	if (4 &gt; arguments.Count) {
+		continue;
+	}
+	
+	// report only if there are more than 3 arguments share the same type
+	CxList types = typeRefs.FindByFathers(arguments);
+	foreach (CxList type in types) {
+		string typeName = type.GetDOMPropertiesOfFirst().ShortName;
+		if(!defined.ContainsKey(typeName)) {
+			defined.Add(typeName, 1);
+		}
+		defined[typeName] += 1;
+	}
+	foreach( KeyValuePair&lt;string, int&gt; kvp in defined ){
+		if (3 &lt;= kvp.Value) {
+			result.Add(methodDecl);
+		}
+	}
+}</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>1</Version></Query><Query><QueryId>100028</QueryId><Name>Excessive_Class_Length</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>// report method that has more than 1000 lines of code 
+
+CxList methodDecls = Find_MethodDecls();
+
+foreach(CxList method in methodDecls) {
+	int methodLine = method.GetDOMPropertiesOfFirst().Line;
+	CxList methodBody = All.GetByAncs(method);
+	CxList methodBodyMoreThanThousandLines = methodBody.Filter(x =&gt; x.Line - methodLine &gt;= 1000);
+	if (0 &lt; methodBodyMoreThanThousandLines.Count) {
+		result.Add(method);
+	}
+}
+</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>3</Version></Query><Query><QueryId>100029</QueryId><Name>Excessive_Public_Count</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>// This query reports class declarations that has more than 20 public memeber
+CxList classDecls = Find_ClassDecl();
+foreach (CxList classDecl in classDecls) {
+	CxList classMembers = All.GetByAncs(classDecl) - classDecl;
+	CxList publicMembers = classMembers.FindByFieldAttributes(Modifiers.Public);
+	if (20 &lt; publicMembers.Count) {
+		result.Add(classDecl);
+	}
+}</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>1</Version></Query><Query><QueryId>100030</QueryId><Name>Field_Declarations_Should_Be_At_Start</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>// This query reports class declarations that have field decalarations after method declarations
+CxList classDecls = Find_ClassDecl();
+foreach (CxList classDecl in classDecls) {
+	CxList memberCollection = All.FindByFathers(classDecl);
+	CxList membersOfClass = All.FindByFathers(memberCollection);
+	
+	// maximum line number of FieldDecl should be smaller than maximum line number of MethodDecl
+	int maximumLineNumberOfFieldDecl = 0;
+	int maximumLineNumberOfMethodDecl = 1;
+	foreach (CxList member in membersOfClass) {
+		int lineNumber = member.GetDOMPropertiesOfFirst().Line;
+		CxList field = member.FindByType(typeof(FieldDecl));;
+		if (0 != field.Count &amp;&amp; maximumLineNumberOfFieldDecl &lt; lineNumber) {
+			maximumLineNumberOfFieldDecl = lineNumber;
+		} else if (maximumLineNumberOfMethodDecl &lt; lineNumber) {
+			maximumLineNumberOfMethodDecl = lineNumber;
+		}
+	}
+	/*
+	cxLog.WriteDebugMessage("className: " + classDecl.GetDOMPropertiesOfFirst().ShortName +
+		" maximumLineNumberOfFieldDecl: " + maximumLineNumberOfFieldDecl + " maximumLineNumberOfMethodDecl: " + maximumLineNumberOfMethodDecl);
+	*/
+	if (maximumLineNumberOfFieldDecl &gt; maximumLineNumberOfMethodDecl) {
+		result.Add(classDecl);
+	}
+}</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>1</Version></Query><Query><QueryId>100031</QueryId><Name>Field_Naming_Conventions</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>// This query reports field decalarations that is not camel case, 
+// except the constants (static final), static field, final field.
+CxList fieldDecls = Find_FieldDecls();
+CxList staticFields = fieldDecls.FindByFieldAttributes(Modifiers.Static);
+CxList finalFields = fieldDecls.FindByRegex(@"\Wfinal\W");
+CxList fields = fieldDecls - staticFields - finalFields;
+CxList camelCaseFields = fields.FindByRegex(@"\s*[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?\s*;");
+result = fields - camelCaseFields;
+</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>1</Version></Query><Query><QueryId>100032</QueryId><Name>Formal_Parameter_Naming_Conventions</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>// This query reports any parameter decalaration that is not camel case
+CxList paramDecls = Find_ParamDecl();
+CxList paramDeclsOfCamelCase = paramDecls.FindByRegex(@"\s*[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?[,)]");
+result = paramDecls - paramDeclsOfCamelCase;</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>2</Version></Query><Query><QueryId>100033</QueryId><Name>Inaccessible_Aura_Enabled_Getter</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>// This query reports access modifiers that are private or protected
+CxList accessorDecls = All.FindByType(typeof(AccessorDecl));
+result = accessorDecls.FindByFieldAttributes(Modifiers.Private | Modifiers.Protected);</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>1</Version></Query><Query><QueryId>100034</QueryId><Name>Local_Variable_Naming_Conventions</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>// This query reports any local variable that is not camel case.
+CxList constructors = Find_ConstructorDecl();
+CxList methodDecls = Find_MethodDecls();
+CxList declarators = Find_Declarators();
+CxList declaratorsInMethodDecl = declarators.GetByAncs(methodDecls);
+declaratorsInMethodDecl.Add(declarators.GetByAncs(constructors));
+CxList declaratorsOfCamelCase = declaratorsInMethodDecl.FindByRegex(@"\s*[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?\s*[=;:]");
+result = declaratorsInMethodDecl - declaratorsOfCamelCase;</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>1</Version></Query><Query><QueryId>100035</QueryId><Name>Method_Naming_Conventions</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>// This query reports any method declaration that is not camel case
+CxList methodDecls = Find_MethodDecls();
+CxList methodDeclsOfCamelCase = methodDecls.FindByRegex(@"\s*[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?\s*[(]");
+result = methodDecls - methodDeclsOfCamelCase;</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>1</Version></Query><Query><QueryId>100036</QueryId><Name>Method_With_Same_Name_As_Enclosing_Class</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>// This query report any method declaration that its name is the same as the class name
+CxList classDecls = Find_ClassDecl();
+CxList methodDecls = Find_MethodDecls();
+foreach (CxList classDecl in classDecls) {
+	CxList methodDeclInClass = methodDecls.GetByAncs(classDecl); 
+	string className = classDecl.GetDOMPropertiesOfFirst().ShortName;
+	
+	CxList methods = methodDeclInClass.FilterByDomProperty&lt;MethodDecl&gt;(x =&gt; x.ShortName.Equals(className));
+	if (0 &lt; methods.Count) {
+		result.Add(methods);
+	}
+}
+</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>1</Version></Query><Query><QueryId>100037</QueryId><Name>Ncss_Constructor_Count</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>// report constructor that has more than 20 lines of code
+CxList constructors = Find_ConstructorDecl();
+
+foreach(CxList constructor in constructors) {
+	CxList descendents = All.GetByAncs(constructor);
+	HashSet&lt;int&gt; lineNumbers = new HashSet&lt;int&gt;();
+	foreach(CxList descendent in descendents) {
+		int lineNumber = descendent.GetDOMPropertiesOfFirst().Line;
+		lineNumbers.Add(lineNumber);
+	}
+	/*
+	cxLog.WriteDebugMessage("constructor: " + constructor.GetDOMPropertiesOfFirst().ShortName
+		+ " lines of code: " + lineNumbers.Count);
+	*/
+	if (20 &lt; lineNumbers.Count) {
+		result.Add(constructor);
+	}
+}</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>1</Version></Query><Query><QueryId>100038</QueryId><Name>Ncss_Method_Count</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>// report methods that has more than 40 lines of code
+CxList methodDecls = Find_MethodDecls();
+
+foreach(CxList methodDecl in methodDecls) {
+	CxList descendents = All.GetByAncs(methodDecl);
+	HashSet&lt;int&gt; lineNumbers = new HashSet&lt;int&gt;();
+	foreach(CxList descendent in descendents) {
+		int lineNumber = descendent.GetDOMPropertiesOfFirst().Line;
+		lineNumbers.Add(lineNumber);
+	}
+	/*
+	cxLog.WriteDebugMessage("method: " + methodDecl.GetDOMPropertiesOfFirst().ShortName
+		+ " lines of code: " + lineNumbers.Count);
+	*/
+	if (40 &lt; lineNumbers.Count) {
+		result.Add(methodDecl);
+	}
+}</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>3</Version></Query><Query><QueryId>100039</QueryId><Name>Ncss_Type_Count</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>// This query report class declaration with more than 500 lines of code
+CxList classDecls = Find_ClassDecl();
+
+foreach(CxList classDecl in classDecls) {
+	CxList descendents = All.GetByAncs(classDecl);
+	HashSet&lt;int&gt; lineNumbers = new HashSet&lt;int&gt;();
+	foreach(CxList descendent in descendents) {
+		int lineNumber = descendent.GetDOMPropertiesOfFirst().Line;
+		lineNumbers.Add(lineNumber);
+	}
+	/*
+	cxLog.WriteDebugMessage("class: " + classDecl.GetDOMPropertiesOfFirst().ShortName
+		+ " lines of code: " + lineNumbers.Count);
+	*/
+	if (40 &lt; lineNumbers.Count) {
+		result.Add(classDecl);
+	}
+}</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>2</Version></Query><Query><QueryId>100041</QueryId><Name>Override_Both_Equals_And_Hashcode</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>// this query reports class that only have either "equals" or "hashCode" method definition, but not both.
+CxList methodDecls = Find_MethodDecls();
+List&lt;string&gt; methodsList = new List&lt;string&gt; {"equals", "hashCode"};
+CxList methods = methodDecls.FindByShortNames(methodsList);
+foreach(CxList method in methods) {
+	CxList classDecl = method.GetAncOfType(typeof(ClassDecl));
+	CxList methodDeclsInClass = methodDecls.GetByAncs(classDecl);
+	CxList equalsAndHashCodeMethodDecls = methodDeclsInClass.Filter(x =&gt; methodsList.Contains(x.ShortName));
+	if (1 == equalsAndHashCodeMethodDecls.Count) {
+		result.Add(classDecl);
+	}
+}</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>2</Version></Query><Query><QueryId>100042</QueryId><Name>Property_Naming_Conventions</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>// This query reports any property declaration that is not camel case
+CxList propertiesDecl = Find_PropertyDecl();
+CxList propertiesDeclOfCamelCase = propertiesDecl.FindByRegex(@"\s*[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?\s*{");
+result = propertiesDecl - propertiesDeclOfCamelCase;</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>2</Version></Query><Query><QueryId>100043</QueryId><Name>Too_Many_Fields</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>// report the class that has more than 15 fields
+
+CxList fieldDecls = Find_FieldDecls();
+CxList classDecls = Find_ClassDecl();
+
+foreach(CxList classDecl in classDecls) {
+	CxList fieldsInClass = fieldDecls.GetByAncs(classDecl);
+	if (15 &lt; fieldsInClass.Count) {
+		result.Add(classDecl);
+	}
+}</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>1</Version></Query><Query><QueryId>100044</QueryId><Name>One_Declaration_Per_Line</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>CxList methodDecls = Find_MethodDecls();
+CxList declarators = Find_Declarators();
+foreach(CxList methodDecl in methodDecls) {
+	CxList declaratorsInMethod = declarators.GetByAncs(methodDecl);
+	List&lt;int&gt; lineNumbers = new List&lt;int&gt;();
+	foreach(CxList declarator in declaratorsInMethod) {
+		int line = declarator.GetDOMPropertiesOfFirst().Line;
+		if (lineNumbers.Contains(line) ) {
+			result.Add(declarator);
+		} else {
+			lineNumbers.Add(line);
+		}
+	}
+}
+</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>2</Version></Query><Query><QueryId>100045</QueryId><Name>Test_Methods_Must_Be_In_Test_Classes</Name><Cwe>0</Cwe><PackageId>100009</PackageId><IsExecutable>true</IsExecutable><Severity>1</Severity><LanguageName>Apex</LanguageName><IsEncrypted>false</IsEncrypted><IsReadOnly>false</IsReadOnly><Language>16</Language><Description /><PackageTypeName>Corp</PackageTypeName><PackageType>1</PackageType><GroupName>Apex_Force_com_Code_Quality</GroupName><Source>// This query report class declarations that has test method, but not annotated by istest.
+CxList methodDecls = Find_MethodDecls();
+CxList classDecls = Find_ClassDecl();
+CxList testCode = Find_Test_Code();
+
+CxList methodDeclInTestCode = testCode.FindByType(typeof(MethodDecl));
+CxList classDeclWithTestMethod = methodDeclInTestCode.GetAncOfType(typeof(ClassDecl));
+
+CxList customAttributes = All.FindByCustomAttribute("istest");
+CxList isTest = customAttributes.GetFathers();
+CxList classAnnotatedWithIsTest = isTest.FindByTypes(typeof(ClassDecl));
+result = classDeclWithTestMethod - classAnnotatedWithIsTest;
+</Source><EngineMetadata p3:nil="true" xmlns:p3="http://www.w3.org/2001/XMLSchema-instance" /><Version>2</Version></Query></Queries>
