@@ -1,26 +1,35 @@
-// This query reports class declarations that have field decalarations after method declarations
+// This query reports field decalarations after method declarations and property declarations
 CxList classDecls = Find_ClassDecl();
 foreach (CxList classDecl in classDecls) {
 	CxList memberCollection = All.FindByFathers(classDecl);
 	CxList membersOfClass = All.FindByFathers(memberCollection);
 	
-	// maximum line number of FieldDecl should be smaller than maximum line number of MethodDecl
+	// maximum line number of FieldDecl should be smaller than 
+	// maximum line number of MethodDecl and PropertyDecl
 	int maximumLineNumberOfFieldDecl = 0;
-	int maximumLineNumberOfMethodDecl = 1;
+	int maximumLineNumberOfMethodDecl = 0;
+	int maximumLineNumberOfPropertyDecl = 0;
 	foreach (CxList member in membersOfClass) {
 		int lineNumber = member.GetDOMPropertiesOfFirst().Line;
-		CxList field = member.FindByType(typeof(FieldDecl));;
-		if (0 != field.Count && maximumLineNumberOfFieldDecl < lineNumber) {
+		CxList field = member.FindByType(typeof(FieldDecl));
+		if (0 != field.Count) {
 			maximumLineNumberOfFieldDecl = lineNumber;
-		} else if (maximumLineNumberOfMethodDecl < lineNumber) {
-			maximumLineNumberOfMethodDecl = lineNumber;
 		}
-	}
-	/*
-	cxLog.WriteDebugMessage("className: " + classDecl.GetDOMPropertiesOfFirst().ShortName +
-		" maximumLineNumberOfFieldDecl: " + maximumLineNumberOfFieldDecl + " maximumLineNumberOfMethodDecl: " + maximumLineNumberOfMethodDecl);
-	*/
-	if (maximumLineNumberOfFieldDecl > maximumLineNumberOfMethodDecl) {
-		result.Add(classDecl);
+		CxList method = member.FindByType(typeof(MethodDecl));
+		if (0 != method.Count) {
+		    maximumLineNumberOfMethodDecl = lineNumber;
+		}
+		CxList property = member.FindByType(typeof(PropertyDecl));
+		if (0 != property.Count) {
+			maximumLineNumberOfPropertyDecl = lineNumber;
+		}
+		
+		if (0 != maximumLineNumberOfMethodDecl 
+		&& maximumLineNumberOfFieldDecl > maximumLineNumberOfMethodDecl) {
+			result.Add(field);
+		} else if (0 != maximumLineNumberOfPropertyDecl 
+		&& maximumLineNumberOfFieldDecl > maximumLineNumberOfPropertyDecl) {
+			result.Add(field);
+		}
 	}
 }
