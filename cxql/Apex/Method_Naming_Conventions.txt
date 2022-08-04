@@ -1,4 +1,17 @@
-// This query reports any method declaration that is not camel case
-CxList methodDecls = Find_MethodDecls();
-CxList methodDeclsOfCamelCase = methodDecls.FindByRegex(@"\s*[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?\s*[(]");
+// This query reports any method declaration from .cls files that is not camel case
+CxList methodDecls = Find_MethodDecls().FindByFileName("*.cls");
+
+string regexForMethod = @"\s*[a-z][a-zA-Z0-9]*\s*[(]";
+CxList methodNameFollowingConventions = All.FindByRegexExt(
+	regexForMethod, 
+	"*.cls", 
+	false, 
+	System.Text.RegularExpressions.RegexOptions.Singleline
+);
+
+List<string> validMehtodNames = methodNameFollowingConventions.CxSelectElementValues<CSharpGraph, string>(
+	x => x.ShortName.Replace("(", "").Trim()
+);
+
+CxList methodDeclsOfCamelCase = methodDecls.FindByShortNames(validMehtodNames, false);
 result = methodDecls - methodDeclsOfCamelCase;
