@@ -1,16 +1,16 @@
 // This query reports any property declaration that is not camel case
 CxList propertiesDecl = Find_PropertyDecl().FindByFileName("*.cls");
 
-string regexForMethod = @"\s*[a-z][a-zA-Z0-9]*\s*[{]";
-CxList methodNameFollowingConventions = All.FindByRegexExt(
-	regexForMethod, 
+string regex = @"\s*[a-z][a-zA-Z0-9]*\s*[{]";
+CxList nameFollowingConventions = All.FindByRegexExt(
+	regex, 
 	"*.cls", 
 	false, 
 	System.Text.RegularExpressions.RegexOptions.Singleline
 	);
 
-List<string> validPropertyNames = methodNameFollowingConventions.CxSelectElementValues<CSharpGraph, string>(
+List<string> validNames = nameFollowingConventions.CxSelectElementValues<CSharpGraph, string>(
 	x => x.ShortName.Replace("{", "").Trim()
 	);
-CxList propertiesDeclOfCamelCase = propertiesDecl.FindByShortNames(validPropertyNames, false);
+CxList propertiesDeclOfCamelCase = propertiesDecl.FindByShortNames(validNames, false);
 result = propertiesDecl - propertiesDeclOfCamelCase;
