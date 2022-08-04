@@ -4,5 +4,18 @@ CxList methodDecls = Find_MethodDecls();
 CxList declarators = Find_Declarators();
 CxList declaratorsInMethodDecl = declarators.GetByAncs(methodDecls);
 declaratorsInMethodDecl.Add(declarators.GetByAncs(constructors));
-CxList declaratorsOfCamelCase = declaratorsInMethodDecl.FindByRegex(@"\s*[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?\s*[=;:]");
+
+string regex = @"\s*[a-z][a-zA-Z0-9]*\s*[=;:)]";
+CxList nameFollowingConventions = All.FindByRegexExt(
+	regex, 
+	"*.cls", 
+	false, 
+	System.Text.RegularExpressions.RegexOptions.Singleline
+	);
+
+List<string> validNames = nameFollowingConventions.CxSelectElementValues<CSharpGraph, string>(
+	x => x.ShortName.Replace("=", "").Replace(";", "").Replace(":", "").Replace(")", "").Trim()
+	);
+CxList declaratorsOfCamelCase = declaratorsInMethodDecl.FindByShortNames(validNames, false);
+
 result = declaratorsInMethodDecl - declaratorsOfCamelCase;
