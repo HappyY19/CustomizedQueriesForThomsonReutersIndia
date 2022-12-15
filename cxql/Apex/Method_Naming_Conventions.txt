@@ -1,17 +1,9 @@
 // This query reports any method declaration from .cls files that is not camel case
 CxList methodDecls = Find_MethodDecls().FindByFileName("*.cls");
 
-string regex = @"\s*[a-z][a-zA-Z0-9]*\s*[(]";
-CxList nameFollowingConventions = All.FindByRegexExt(
-	regex, 
-	"*.cls", 
-	false, 
-	System.Text.RegularExpressions.RegexOptions.Singleline
-);
+string specialCharacters = "(";
+string regex = @"[a-z][a-zA-Z0-9]*\s*[" + specialCharacters + "]";
+string domType = "MethodDecl";
+CxList methodDeclsOfCamelCase = Find_Apex_Code_By_Regex(regex, domType, specialCharacters);
 
-List<string> validNames = nameFollowingConventions.CxSelectElementValues<CSharpGraph, string>(
-	x => x.ShortName.Replace("(", "").Trim()
-);
-
-CxList methodDeclsOfCamelCase = methodDecls.FindByShortNames(validNames, false);
 result = methodDecls - methodDeclsOfCamelCase;

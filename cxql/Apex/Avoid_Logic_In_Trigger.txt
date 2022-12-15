@@ -1,9 +1,9 @@
 // https://salesforce.stackexchange.com/questions/354975/avoid-logic-in-triggers-pmd-with-safe-navigator
 // https://github.com/sakomg/my-twistrail/blob/master/force-app/main/default/triggers/OpportunityTrigger.trigger
 CxList trigerCode = Find_Triggers_Code();
-
 CxList conditions = Get_Conditions();
-
 CxList conditionInTriggerCode = trigerCode * conditions;
-
-result = conditionInTriggerCode.FindByMemberAccess("trigger.is*", false);
+CxList tirggerIs = conditionInTriggerCode.FindByMemberAccess("trigger.is*", false);
+if (tirggerIs.Count > 0) {
+	result.Add(trigerCode.FindByType(typeof(MethodDecl)));
+}

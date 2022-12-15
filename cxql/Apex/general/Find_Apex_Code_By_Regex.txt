@@ -1,0 +1,86 @@
+/*
+* This query intend to find the source code elements which by the regular expression
+* 
+* Parameters:
+*   param[0] - legal regular expression to identify the source code element, 
+*   param[1] - DOM type, support ClassDecl, FieldDecl, ParamDecl, Declarator, MethodDecl, PropertyDecl  
+*   param[2] - special characters
+*/
+CxList classDecls = Find_ClassDecl();
+CxList fieldDecls = Find_FieldDecls();
+CxList paramDecls = Find_ParamDecl();
+CxList declarators = Find_Declarators();
+CxList constructors = Find_ConstructorDecl();
+CxList methodDecls = Find_MethodDecls();
+CxList propertiesDecl = Find_PropertyDecl();
+
+CxList declaratorsInMethodDecl = declarators.GetByAncs(methodDecls);
+declaratorsInMethodDecl.Add(declarators.GetByAncs(constructors));
+CxList localVariables = All.FindAllReferences(declaratorsInMethodDecl);
+
+if(param.Length == 3) {
+	string regex = param[0] as string;
+	string domType = param[1] as string;
+	string specialCharacters = param[2] as string;
+	char[] arr = specialCharacters.ToCharArray();
+
+	CxList nameFollowingConventions = All.FindByRegexExt(
+		regex, 
+		"*.*", 
+		false, 
+		System.Text.RegularExpressions.RegexOptions.Singleline
+		);
+	CxList targetNodes = All.NewCxList();
+	switch(domType) {
+		case "ClassDecl":
+			targetNodes = classDecls.Clone();
+			break;
+		case "FieldDecl":
+			targetNodes = fieldDecls.Clone();
+			break;
+		case "ParamDecl":
+			targetNodes = paramDecls.Clone();
+			break;
+		case "Declarator":
+			targetNodes = declarators.Clone();
+			break;
+		case "MethodDecl":
+			targetNodes = methodDecls.Clone();
+			break;
+		case "PropertyDecl":
+			targetNodes = propertiesDecl.Clone();
+			break;
+		default:
+			break;
+	}	
+			
+	foreach(CxList comment in nameFollowingConventions) {
+		string fileName = comment.GetDOMPropertiesOfFirst().FileName;
+		cxLog.WriteDebugMessage("fileName shortname: " + fileName);
+		int lineNumber = comment.GetDOMPropertiesOfFirst().Line;
+		cxLog.WriteDebugMessage("comment lineNumber shortname: " + lineNumber);
+		string shortName = comment.GetDOMPropertiesOfFirst().ShortName;
+		
+		foreach(char c in arr) {
+			shortName = shortName.Replace(c, ' ');
+		}
+		if (shortName.StartsWith("class")) {
+			shortName = shortName.Replace("class", "");
+		}
+		shortName = shortName.Trim().ToLower();
+		cxLog.WriteDebugMessage("comment shortname: " + shortName);
+		// if there is one valid name in this line, also other invalid names
+		// we should remove the invalid names
+		CxList validCode = targetNodes.FindByPosition(fileName, lineNumber);
+		foreach(CxList code in validCode){
+		    string codeShortName = code.GetDOMPropertiesOfFirst().ShortName;
+			cxLog.WriteDebugMessage("code ShortName shortname: " + codeShortName);
+			int codeLineNumber = code.GetDOMPropertiesOfFirst().Line;
+			cxLog.WriteDebugMessage("code lineNumber shortname: " + codeLineNumber);
+			if (!codeShortName.Equals(shortName)) {
+				validCode -= code;
+			}
+		}
+		result.Add(validCode);
+	}
+}

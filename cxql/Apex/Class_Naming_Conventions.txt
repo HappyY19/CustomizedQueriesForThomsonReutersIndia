@@ -1,3 +1,6 @@
-CxList classDecls = Find_ClassDecl();
-CxList classWithPascalCase = classDecls.FindByRegex(@"(\s)+([A-Z][a-z]+)+(\s)+");
+CxList classDecls = Find_ClassDecl().FindByFileName("*.cls");
+string specialCharacters = " \r{";
+string regex = @"class [A-Z][a-zA-Z0-9]*\s*[" + specialCharacters + "]";
+string domType = "ClassDecl";
+CxList classWithPascalCase = Find_Apex_Code_By_Regex(regex, domType, specialCharacters);
 result = classDecls - classWithPascalCase;

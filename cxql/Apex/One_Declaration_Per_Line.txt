@@ -1,9 +1,25 @@
 CxList methodDecls = Find_MethodDecls();
 CxList declarators = Find_Declarators();
+CxList fieldDecls = Find_FieldDecls();
+CxList classDecls = Find_ClassDecl();
+
 foreach(CxList methodDecl in methodDecls) {
 	CxList declaratorsInMethod = declarators.GetByAncs(methodDecl);
 	List<int> lineNumbers = new List<int>();
 	foreach(CxList declarator in declaratorsInMethod) {
+		int line = declarator.GetDOMPropertiesOfFirst().Line;
+		if (lineNumbers.Contains(line) ) {
+			result.Add(declarator);
+		} else {
+			lineNumbers.Add(line);
+		}
+	}
+}
+
+foreach(CxList classDecl in classDecls) {
+	CxList declaratorsInClass = fieldDecls.GetByAncs(classDecl);
+	List<int> lineNumbers = new List<int>();
+	foreach(CxList declarator in declaratorsInClass) {
 		int line = declarator.GetDOMPropertiesOfFirst().Line;
 		if (lineNumbers.Contains(line) ) {
 			result.Add(declarator);

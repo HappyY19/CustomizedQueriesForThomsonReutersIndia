@@ -5,17 +5,11 @@ CxList declarators = Find_Declarators();
 CxList declaratorsInMethodDecl = declarators.GetByAncs(methodDecls);
 declaratorsInMethodDecl.Add(declarators.GetByAncs(constructors));
 
-string regex = @"\s*[a-z][a-zA-Z0-9]*\s*[=;:)]";
-CxList nameFollowingConventions = All.FindByRegexExt(
-	regex, 
-	"*.cls", 
-	false, 
-	System.Text.RegularExpressions.RegexOptions.Singleline
-	);
+CxList localVariables = declaratorsInMethodDecl;
 
-List<string> validNames = nameFollowingConventions.CxSelectElementValues<CSharpGraph, string>(
-	x => x.ShortName.Replace("=", "").Replace(";", "").Replace(":", "").Replace(")", "").Trim()
-	);
-CxList declaratorsOfCamelCase = declaratorsInMethodDecl.FindByShortNames(validNames, false);
+string specialCharacters = "=;:),";
+string regex = @"[a-z][a-zA-Z0-9]*\s*[" + specialCharacters + "]";
+string domType = "Declarator";
+CxList localVariablesOfCamelCase = Find_Apex_Code_By_Regex(regex, domType, specialCharacters);
 
-result = declaratorsInMethodDecl - declaratorsOfCamelCase;
+result = localVariables - localVariablesOfCamelCase;

@@ -12,7 +12,7 @@ foreach(CxList classDecl in classDecls) {
 	cxLog.WriteDebugMessage("class: " + classDecl.GetDOMPropertiesOfFirst().ShortName
 		+ " lines of code: " + lineNumbers.Count);
 	*/
-	if (40 < lineNumbers.Count) {
+	if (500 < lineNumbers.Count) {
 		result.Add(classDecl);
 	}
 }

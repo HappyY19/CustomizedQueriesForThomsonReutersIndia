@@ -2,9 +2,18 @@
 
 CxList fieldDecls = Find_FieldDecls();
 CxList classDecls = Find_ClassDecl();
+CxList propertyDecls = Find_PropertyDecl();
 
 foreach(CxList classDecl in classDecls) {
 	CxList fieldsInClass = fieldDecls.GetByAncs(classDecl);
+	CxList propertyInClass = propertyDecls.GetByAncs(classDecl);
+	// for each property declaration, cx also generate a field, we should remove it
+	foreach(CxList property in propertyInClass) {
+		string shortName = property.GetDOMPropertiesOfFirst().ShortName;
+		shortName = "Cx_" + shortName;
+		CxList field = fieldsInClass.FindByShortName(shortName, false);
+		fieldsInClass -= field;
+	}
 	if (15 < fieldsInClass.Count) {
 		result.Add(classDecl);
 	}

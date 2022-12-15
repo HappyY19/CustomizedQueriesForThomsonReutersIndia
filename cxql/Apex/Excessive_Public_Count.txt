@@ -1,9 +1,11 @@
-// This query reports class declarations that has more than 20 public memeber
+// This query reports class declarations that has more than 10 public memeber
 CxList classDecls = Find_ClassDecl();
+
 foreach (CxList classDecl in classDecls) {
 	CxList classMembers = All.GetByAncs(classDecl) - classDecl;
 	CxList publicMembers = classMembers.FindByFieldAttributes(Modifiers.Public);
-	if (20 < publicMembers.Count) {
+	CxList publicFieldAndProperty = publicMembers.FindByTypes(typeof(FieldDecl), typeof(PropertyDecl));
+	if (10 < publicFieldAndProperty.Count) {
 		result.Add(classDecl);
 	}
 }

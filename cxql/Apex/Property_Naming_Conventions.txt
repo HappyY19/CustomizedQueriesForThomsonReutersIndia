@@ -1,16 +1,9 @@
 // This query reports any property declaration that is not camel case
 CxList propertiesDecl = Find_PropertyDecl().FindByFileName("*.cls");
 
-string regex = @"\s*[a-z][a-zA-Z0-9]*\s*[{]";
-CxList nameFollowingConventions = All.FindByRegexExt(
-	regex, 
-	"*.cls", 
-	false, 
-	System.Text.RegularExpressions.RegexOptions.Singleline
-	);
+string specialCharacters = "{";
+string regex = @"[a-z][a-zA-Z0-9]*\s*[" + specialCharacters + "]";
+string domType = "PropertyDecl";
+CxList propertiesDeclOfCamelCase = Find_Apex_Code_By_Regex(regex, domType, specialCharacters);
 
-List<string> validNames = nameFollowingConventions.CxSelectElementValues<CSharpGraph, string>(
-	x => x.ShortName.Replace("{", "").Trim()
-	);
-CxList propertiesDeclOfCamelCase = propertiesDecl.FindByShortNames(validNames, false);
 result = propertiesDecl - propertiesDeclOfCamelCase;
