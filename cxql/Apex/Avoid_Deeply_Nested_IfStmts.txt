@@ -1,4 +1,48 @@
+// This query intends to find the third level if 
 CxList ifStmts = Find_Ifs();
-CxList childOfFirstLevel = All.FindByFathers(ifStmts);
-CxList secondLevel = ifStmts.GetByAncs(childOfFirstLevel);
-result = ifStmts.GetByAncs(secondLevel);
+
+foreach(CxList ifStmt in ifStmts) {
+	// upper second
+	CxList ifFatherA = ifStmt.GetFathers().GetFathers();
+	// upper third
+	CxList ifFatherB = ifFatherA.GetFathers().GetFathers();
+	// upper fourth
+	CxList ifFatherC = ifFatherB.GetFathers().GetFathers();
+	// upper fifth
+	CxList ifFatherD = ifFatherC.GetFathers().GetFathers();
+	// upper sixth
+	CxList ifFatherE = ifFatherD.GetFathers().GetFathers();
+	// upper seventh
+	CxList ifFatherF = ifFatherD.GetFathers().GetFathers();
+	
+	// skip the else if
+	CxList falseBlockStatements = ifFatherA.GetBlocksOfIfStatements(false);
+	CxList ifDirectFather = ifStmt.GetFathers();
+	if ((falseBlockStatements * ifDirectFather).Count > 0) {
+		continue;
+	}
+
+	if (
+		ifFatherA.FindByTypes(typeof(IfStmt)).Count == 1
+		&& ifFatherB.FindByTypes(typeof(IfStmt)).Count == 1
+		&& ifFatherD.FindByTypes(typeof(IfStmt), typeof(ForEachStmt)).Count == 0 
+	) {
+		result.Add(ifStmt);
+	} else if (
+		ifFatherA.FindByTypes(typeof(IfStmt)).Count == 1
+		&& ifFatherB.FindByTypes(typeof(ForEachStmt)).Count == 1
+		&& ifFatherC.FindByTypes(typeof(IfStmt), typeof(ForEachStmt), typeof(TryCatchFinallyStmt)).Count == 1 
+	    && ifFatherE.FindByTypes(typeof(IfStmt), typeof(ForEachStmt), typeof(TryCatchFinallyStmt)).Count == 0
+	) {
+		result.Add(ifStmt);
+	} else if (
+		ifFatherA.FindByTypes(typeof(ForEachStmt)).Count == 1
+		&& ifFatherB.FindByTypes(typeof(IfStmt)).Count == 1
+		&& ifFatherC.FindByTypes(typeof(IfStmt)).Count == 1 
+		&& ifFatherD.FindByTypes( typeof(ForEachStmt), typeof(TryCatchFinallyStmt)).Count == 0
+		&& ifFatherF.FindByTypes(typeof(IfStmt), typeof(ForEachStmt), typeof(TryCatchFinallyStmt)).Count == 0
+	) {
+		result.Add(ifStmt);
+	}
+
+}
