@@ -1,3 +1,4 @@
 src
 *.cls
 *.trigger
+.sfdx

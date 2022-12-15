@@ -1,0 +1,49 @@
+CxList ifStmts = Find_Ifs();
+CxList loops = Find_Loops();
+CxList forEachStmts = Find_ForEachStmt();
+ifStmts.Add(loops);
+ifStmts.Add(forEachStmts);
+
+string regex = @"([iI]f|[fF]or|[wW]hile)\s*\([""0-9a-zA-Z\u0080-\u00ff!\s\(\)_\.&=\+\*\?;,<>\|:'-/%\t\[\]]+\)[ \r\n]*{";
+CxList nameFollowingConventions = All.FindByRegexExt(
+	regex, 
+	"*.*", 
+	false, 
+	System.Text.RegularExpressions.RegexOptions.Multiline
+	);
+foreach(CxList node in nameFollowingConventions) {
+	String shortName = node.GetDOMPropertiesOfFirst().ShortName;
+	//cxLog.WriteDebugMessage(shortName);
+}
+
+CxList validCode = All.NewCxList();
+
+foreach(CxList comment in nameFollowingConventions) {
+	string fileName = comment.GetDOMPropertiesOfFirst().FileName;
+	//cxLog.WriteDebugMessage("fileName shortname: " + fileName);
+	int lineNumber = comment.GetDOMPropertiesOfFirst().Line;
+	//cxLog.WriteDebugMessage("comment lineNumber shortname: " + lineNumber);
+	validCode.Add(ifStmts.FindByPosition(fileName, lineNumber));
+}
+result = ifStmts - validCode;
+
+CxList validElseCode = All.NewCxList();
+string elseRegex = @"else\s+[ \r\n]*[0-9a-zA-Z!\s\(\)_\.&=\+\*\?,<>\|:'-/%\t\[\]]+;";
+CxList elseWithoutBraces = All.FindByRegexExt(
+	elseRegex, 
+	"*.*", 
+	false, 
+	System.Text.RegularExpressions.RegexOptions.Multiline
+	);
+foreach(CxList comment in elseWithoutBraces) {
+	string fileName = comment.GetDOMPropertiesOfFirst().FileName;
+	//cxLog.WriteDebugMessage("fileName shortname: " + fileName);
+	int lineNumber = comment.GetDOMPropertiesOfFirst().Line;
+	//cxLog.WriteDebugMessage("comment lineNumber shortname: " + lineNumber);
+	CxList elseCode = All.FindByPosition(fileName, lineNumber);
+	if (elseCode.FindByShortName("*else*").Count == 0) {
+		validElseCode.Add(comment);
+	}
+	
+}
+result.Add(validElseCode);
