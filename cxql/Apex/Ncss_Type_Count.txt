@@ -3,16 +3,18 @@ CxList classDecls = Find_ClassDecl();
 
 foreach(CxList classDecl in classDecls) {
 	CxList descendents = All.GetByAncs(classDecl);
+	CxList methodDecls = descendents.FindByType(typeof(MethodDecl));
 	HashSet<int> lineNumbers = new HashSet<int>();
 	foreach(CxList descendent in descendents) {
 		int lineNumber = descendent.GetDOMPropertiesOfFirst().Line;
 		lineNumbers.Add(lineNumber);
 	}
-	/*
+	
+	if (500 < lineNumbers.Count) {
+		/*
 	cxLog.WriteDebugMessage("class: " + classDecl.GetDOMPropertiesOfFirst().ShortName
 		+ " lines of code: " + lineNumbers.Count);
 	*/
-	if (500 < lineNumbers.Count) {
-		result.Add(classDecl);
+		result.Add(classDecl);	
 	}
 }
